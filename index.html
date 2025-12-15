@@ -331,6 +331,125 @@
             color: var(--gray);
         }
 
+
+        #app-versions {
+  padding: 100px 60px;
+}
+
+.versions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.version-card {
+  position: relative;
+  background: white;
+  border-radius: 24px;
+  padding: 40px;
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: 0.4s;
+}
+
+.version-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+}
+
+.app-img {
+  width: 100%;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.blurred {
+  filter: blur(2px) brightness(0.9);
+}
+
+.version-card h3 {
+  margin-bottom: 10px;
+}
+
+.version-card p {
+  color: var(--gray);
+  margin-bottom: 20px;
+}
+
+.badge {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+.live-badge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.preview-badge {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.qr-box {
+  margin: 20px auto;
+  width: fit-content;
+  padding: 16px;
+  border-radius: 16px;
+  border: 2px dashed var(--primary);
+}
+
+.qr-box img {
+  width: 140px;
+  border-radius: 12px;
+}
+
+.app-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 14px 30px;
+  background: var(--primary);
+  color: white;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.roadmap {
+  list-style: none;
+  text-align: left;
+  max-width: 260px;
+  margin: auto;
+  color: var(--gray);
+}
+
+.coming-soon {
+  margin-top: 20px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Dark Mode */
+body.dark .version-card {
+  background: #1a1f2e;
+  border-color: #2a2f42;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  #app-versions {
+    padding: 60px 20px;
+  }
+}
+
+
         /* CONTACT */
         .contact-form {
             max-width: 600px;
@@ -388,6 +507,89 @@
         .contact-form button:hover {
             background: var(--secondary);
         }
+
+        /* ============ MODAL ============ */
+.video-modal{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,.85);
+  backdrop-filter:blur(6px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+}
+
+.video-modal.active{
+  display:flex;
+}
+
+.video-box{
+  background:#000;
+  width:90%;
+  max-width:900px;
+  border-radius:20px;
+  padding:20px;
+  position:relative;
+  animation:scaleIn .4s ease;
+}
+
+/* Close */
+.close-btn{
+  position:absolute;
+  top:12px;
+  right:16px;
+  font-size:1.4rem;
+  color:#fff;
+  cursor:pointer;
+}
+
+/* Responsive Video */
+.video-wrapper{
+  position:relative;
+  padding-top:56.25%; /* 16:9 */
+  border-radius:16px;
+  overflow:hidden;
+}
+
+.video-wrapper iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+/* Animation */
+@keyframes scaleIn{
+  from{transform:scale(.9);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
+
+/* Mobile tweak */
+@media(max-width:600px){
+  .video-box{
+    padding:12px;
+    border-radius:14px;
+  }
+}
+
+.app-btn {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0fb9c8, #1e88e5);
+  color: #fff;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.app-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+
 
         /* FOOTER */
         footer {
@@ -522,6 +724,80 @@
         </div>
     </section>
 
+    <section id="app-versions">
+        <div class="section-title center">
+            <h2>SafeHeart Applications</h2>
+            <p>Live demo and future roadmap preview</p>
+        </div>
+    
+        <div class="versions-grid">
+    
+            <!-- VERSION 1 - LIVE -->
+            <div class="version-card live">
+                <span class="badge live-badge">LIVE DEMO</span>
+    
+                <img src="./assets/images/web_app_v1.png" class="app-img">
+    
+                <h3>SafeHeart App – Version 1</h3>
+                <p>
+                    Fully functional remote patient monitoring application.
+                    Demonstrated live at the exhibition.
+                </p>
+    
+                <!-- <div class="qr-box">
+                    <img src="./assets/images/data_drive.png">
+                    <span>Scan to open live demo</span>
+                </div>
+     -->
+                <a href="https://mohamedel-sawy.github.io/SafeHeart1/" class="app-btn" target="_blank" rel="noopener noreferrer">
+                    Open Live Demo
+                </a>
+
+            </div>
+    
+            <!-- VERSION 2 - PREVIEW -->
+            <div class="version-card preview">
+                <span class="badge preview-badge">NEXT VERSION</span>
+    
+                <img src="./assets/images/app_v2.png" class="app-img blurred">
+    
+                <h3>SafeHeart App – Version 2</h3>
+                <p>
+                    Advanced analytics, AI-based alerts and enhanced doctor dashboard.
+                    Currently under development.
+                </p>
+    
+                <ul class="roadmap">
+                    <li>• AI Health Insights</li>
+                    <li>• Video Consultations</li>
+                    <li>• Multi-device Support</li>
+                </ul>
+                <button class="app-btn ghost" onclick="openModal()">
+                    Watch App Preview
+                </button>
+
+                <div class="coming-soon">Coming Soon</div>
+            </div>
+    
+        </div>
+    </section>
+
+
+    <div class="video-modal" id="videoModal">
+        <div class="video-box">
+            <span class="close-btn" onclick="closeModal()">✕</span>
+    
+            <div class="video-wrapper">
+                <iframe src="https://drive.google.com/file/d/1x2KMj2xh2LQXVfpFFqyxlHFnQ5arEzxk/view?usp=drive_link" allow="autoplay" allowfullscreen>
+                </iframe>
+            </div>
+    
+        </div>
+    </div>
+
+
+
+
     <!-- CONTACT -->
     <section id="contact">
         <div class="contact-form">
@@ -572,6 +848,88 @@
             window.location.href = "https://yourcompany.com/product"; // حط الرابط الصحيح هنا
         }
     </script>
+
+
+<script>
+    function openModal() {
+        document.getElementById("videoModal").classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeModal() {
+        const modal = document.getElementById("videoModal");
+        modal.classList.remove("active");
+
+        // Stop video
+        modal.querySelector("iframe").src =
+            modal.querySelector("iframe").src;
+
+        document.body.style.overflow = "";
+    }
+
+    document.getElementById("videoModal")
+            .addEventListener("click", e => {
+                if (e.target.id === "videoModal") closeModal();
+            });
+
+</script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyCA-QB0_T3Ano-0iIy7XME-opFc6MZXzRg",
+        authDomain: "safeheart-2d878.safeheart-2d878.firebaseapp.com.com",
+        databaseURL: "https://safeheart-2d878-default-rtdb.firebaseio.com",
+        projectId: "safeheart-2d878",
+        storageBucket: "safeheart-2d878.appspot.com",
+        messagingSenderId: "968110391488",
+        appId: "1:968110391488:web:235a04d5b59205b1076d25"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const form = document.querySelector(".contact-form form");
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !message) {
+            alert("Please fill all fields");
+            return;
+        }
+
+        const contactRef = ref(db, "contact_requests");
+        const newRequest = push(contactRef);
+
+        set(newRequest, {
+            name,
+            email,
+            message,
+            type: "Website Contact",
+            source: "Pitch Page",
+            status: "new",
+            createdAt: new Date().toISOString()
+        })
+            .then(() => {
+                sendEmailNotification(name, email, message);
+                form.reset();
+                alert("Message sent successfully ✔");
+            })
+            .catch((error) => {
+                console.error(error);
+                alert("Error sending message ❌");
+            });
+    });
+</script>
+
+
 
 </body>
 
