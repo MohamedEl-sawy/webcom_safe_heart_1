@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SafeHeart – Pitch Ready</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
@@ -508,6 +512,33 @@ body.dark .version-card {
             background: var(--secondary);
         }
 
+.team-card {
+  text-align: center; /* يجعل كل المحتوى في المنتصف */
+  padding: 30px;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  transition: 0.3s;
+}
+
+.linkedin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 12px; /* مسافة بين النص والأيقونة */
+  padding: 8px;
+  border-radius: 50%;
+  background: #fff;
+  color: #1e2a31;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.linkedin-icon:hover {
+  transform: scale(1.2); /* تكبير عند المرور بالماوس */
+}
+
+
         /* ============ MODAL ============ */
 .video-modal{
   position:fixed;
@@ -720,6 +751,13 @@ body.dark .version-card {
             <div class="team-card"><img src="./assets/images/Mohamed-Fawzy-edited.jpg">
                 <h4>Mohamed Fawzy</h4>
                 <p>Founder & Lead Engineer</p>
+                <!-- LinkedIn Icon -->
+                <!-- LinkedIn Icon -->
+                <a href="https://www.linkedin.com/in/mohamed-fawzy-b33ab8272" target="_blank" class="linkedin-icon">
+                    <!-- <i class="fab fa-linkedin fa-lg"></i> -->
+                    <i class="fab fa-linkedin"></i>
+                </a>
+
             </div>
         </div>
     </section>
@@ -930,8 +968,10 @@ body.dark .version-card {
 </script>
 
 
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
 
 </body>
 
 </html>
-
