@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeHeart – Pitch Ready</title>
+    <title>Safe Heart</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -338,6 +338,63 @@
 
         #app-versions {
   padding: 100px 60px;
+}
+
+.team-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.team-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  border: 1px solid #e2e8f0;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+}
+
+.team-card img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.team-card h3 {
+  margin-bottom: 5px;
+}
+
+.team-card p {
+  color: #64748b;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+}
+
+.linkedin-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border-radius: 50%;
+  background: #fff;
+  color: #0a66c2;
+  font-size: 1.1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.3s;
+}
+
+.linkedin-icon:hover {
+  transform: scale(1.2);
 }
 
 .versions-grid {
@@ -682,7 +739,7 @@ body.dark .version-card {
 <body>
 
     <nav>
-        <div class="logo">SafeHeart</div>
+        <div class="logo">Safe Heart</div>
         <ul>
             <li data-target="hero">Home</li>
             <li> <a href="./Product.html"> Product </a></li>
@@ -744,20 +801,49 @@ body.dark .version-card {
     <!-- TEAM -->
     <section id="team-section">
         <div class="section-title">
-            <h2>Leadership</h2>
+            <h2>Our Team</h2>
             <p>Project ownership and technical direction</p>
         </div>
-        <div class="team">
-            <div class="team-card"><img src="./assets/images/Mohamed-Fawzy-edited.jpg">
-                <h4>Mohamed Fawzy</h4>
-                <p>Founder & Lead Engineer</p>
-                <!-- LinkedIn Icon -->
-                <!-- LinkedIn Icon -->
-                <a href="https://www.linkedin.com/in/mohamed-fawzy-b33ab8272" target="_blank" class="linkedin-icon">
-                    <!-- <i class="fab fa-linkedin fa-lg"></i> -->
+    
+        <div class="team-cards">
+            <!-- Team Member 1 -->
+            <div class="team-card">
+                <img src="./assets/images/Mohamed-Fawzy-edited.jpg" alt="Mohamed Fawzy Elsawy">
+                <h3>Mohamed Fawzy Elsawy</h3>
+                <p>Hardware & Firmware Lead</p>
+                <!-- <a href="https://www.linkedin.com/in/minamaged/" target="_blank" class="linkedin-icon">
                     <i class="fab fa-linkedin"></i>
-                </a>
-
+                </a> -->
+            </div>
+    
+            <!-- Team Member 2 -->
+            <div class="team-card">
+                <img src="./assets/images/Omnia Salah Rateb.jpeg" alt="Omnia Salah Rateb">
+                <h3>Omnia Salah Rateb</h3>
+                <p>UI/UX & Frontend Developer</p>
+                <!-- <a href="#" target="_blank" class="linkedin-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a> -->
+            </div>
+    
+            <!-- Team Member 3 -->
+            <div class="team-card">
+                <img src="./assets/images/Mohamed Ahmed Abdo.jpeg" alt="Mohamed Ahmed Abdo">
+                <h3>Mohamed Ahmed Abdo</h3>
+                <p>Mobile App Developer</p>
+                <!-- <a href="#" target="_blank" class="linkedin-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a> -->
+            </div>
+    
+            <!-- Team Member 4 -->
+            <div class="team-card">
+                <img src="https://via.placeholder.com/300x300" alt="Basel Ashraf Mohamed">
+                <h3>Basel Ashraf Mohamed</h3>
+                <p>Mobile App Developer</p>
+                <!-- <a href="#" target="_blank" class="linkedin-icon">
+                    <i class="fab fa-linkedin"></i>
+                </a> -->
             </div>
         </div>
     </section>
