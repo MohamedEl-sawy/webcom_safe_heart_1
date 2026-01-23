@@ -2,25 +2,33 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Safe Heart</title>
 
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 
     <style>
         :root {
             --primary: #0fb9c8;
             --secondary: #1e88e5;
+
             --dark: #0f172a;
             --light: #f8fafc;
+
             --gray: #64748b;
             --border: #e2e8f0;
+
+            --card: #ffffff;
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+
+            --radius: 18px;
+            --transition: .35s;
         }
 
         /* RESET */
@@ -31,12 +39,12 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
+            font-family: "Inter", sans-serif;
             background: var(--light);
-            transition: .35s;
+            color: var(--dark);
+            line-height: 1.6;
             scroll-behavior: smooth;
+            transition: var(--transition);
         }
 
         a {
@@ -49,14 +57,31 @@
             list-style: none;
         }
 
-        /* DARK MODE */
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .muted {
+            color: var(--gray);
+        }
+
+        /* ==========================
+           DARK MODE
+        ========================== */
         body.dark {
             background: var(--dark);
             color: var(--light);
         }
 
         body.dark nav {
-            background: #1a1f2e;
+            background: rgba(26, 31, 46, .92);
             border-color: #2a2f42;
         }
 
@@ -66,17 +91,15 @@
         }
 
         body.dark .feature,
-        .dark .team-card,
-        .dark .qr,
-        .dark .contact-form {
+        body.dark .team-card,
+        body.dark .version-card,
+        body.dark .contact-card,
+        body.dark .about-box {
             background: #1a1f2e;
-            color: #f8fafc;
             border-color: #2a2f42;
         }
 
-        body.dark .feature p,
-        .dark .team-card p,
-        .dark .contact-form p {
+        body.dark .muted {
             color: #cbd5e1;
         }
 
@@ -85,652 +108,802 @@
         }
 
         body.dark .btn-secondary {
-            color: var(--secondary);
             border-color: var(--secondary);
+            color: var(--secondary);
         }
 
-        /* NAVBAR */
+        body.dark .sidebar {
+            background: #1a1f2e;
+            color: #f8fafc;
+            border-left: 1px solid #2a2f42;
+        }
+
+        body.dark .form-control {
+            background: #0b1222;
+            border-color: #2a2f42;
+            color: #fff;
+        }
+
+        body.dark .hero {
+            background: linear-gradient(135deg,
+                    rgba(15, 185, 200, 0.15),
+                    rgba(30, 136, 229, 0.08));
+        }
+
+        /* ==========================
+           PRELOADER
+        ========================== */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            transition: opacity .35s ease;
+        }
+
+        body.dark #preloader {
+            background: #0b1222;
+        }
+
+        .loader {
+            width: 52px;
+            height: 52px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin .9s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* ==========================
+           NAVBAR
+        ========================== */
         nav {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255, 255, 255, .95);
-            backdrop-filter: blur(12px);
+            z-index: 999;
+
+            background: rgba(255, 255, 255, .92);
+            backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 60px;
-            z-index: 100;
+            transition: var(--transition);
         }
 
-        nav .logo {
-            font-weight: 700;
-            font-size: 1.3rem;
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+        }
+
+        .logo {
+            font-weight: 900;
+            font-size: 1.25rem;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: .2px;
+        }
+
+        .logo-badge {
+            width: 36px;
+            height: 36px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            font-weight: 900;
+            font-size: .95rem;
         }
 
         nav ul {
             display: flex;
-            gap: 30px;
+            gap: 24px;
+            align-items: center;
         }
 
         nav ul li {
+            font-weight: 700;
+            font-size: 0.95rem;
             cursor: pointer;
-            transition: .3s;
+            transition: var(--transition);
         }
 
         nav ul li:hover {
             color: var(--primary);
         }
 
-        nav .cta {
-            padding: 10px 20px;
-            border-radius: 6px;
-            background: var(--primary);
-            color: #fff;
-            font-weight: 600;
-            cursor: pointer;
-            transition: .3s;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        nav .cta:hover {
-            opacity: .85;
+        .theme-btn,
+        .nav-toggle {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: transparent;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: var(--transition);
+        }
+
+        .theme-btn:hover,
+        .nav-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
         }
 
         .nav-toggle {
             display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
         }
 
-        /* SIDEBAR */
+        /* ==========================
+           SIDEBAR
+        ========================== */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, .45);
+            display: none;
+            z-index: 998;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
         .sidebar {
             position: fixed;
             top: 0;
-            right: -280px;
+            right: -320px;
+            width: 320px;
             height: 100%;
-            width: 280px;
+            padding: 90px 24px 24px;
             background: var(--light);
-            box-shadow: -4px 0 25px rgba(0, 0, 0, .15);
-            transition: 0.3s ease-in-out;
-            padding: 60px 20px;
-            z-index: 150;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .sidebar ul {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .sidebar ul li {
-            cursor: pointer;
-            font-weight: 500;
+            border-left: 1px solid var(--border);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, .15);
+            transition: var(--transition);
+            z-index: 1000;
         }
 
         .sidebar.show {
             right: 0;
         }
 
-        body.dark .sidebar {
-            background: #1a1f2e;
-            color: #f8fafc;
+        .sidebar ul {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
         }
 
-        /* HERO */
-        .hero {
-            padding: 120px 60px;
+        .sidebar ul li {
+            font-weight: 800;
+            padding: 12px 14px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .sidebar ul li:hover {
+            background: rgba(15, 185, 200, .12);
+            color: var(--primary);
+        }
+
+        /* ==========================
+           HERO
+        ========================== */
+        header.hero {
+            padding-top: 120px;
+            padding-bottom: 80px;
+            background: linear-gradient(135deg,
+                    rgba(15, 185, 200, 0.08),
+                    rgba(30, 136, 229, 0.05));
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-grid {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 60px;
+            gap: 50px;
             align-items: center;
-            transition: .3s;
         }
 
         .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 700;
-            margin-bottom: 20px;
+            font-size: 3.1rem;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            font-weight: 900;
+            letter-spacing: -0.8px;
         }
 
         .hero p {
-            color: var(--gray);
-            max-width: 520px;
-            margin-bottom: 35px;
+            max-width: 560px;
+            margin-bottom: 26px;
         }
 
-        .hero-buttons a {
-            margin-right: 15px;
-            font-weight: 600;
+        .hero-badges {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            font-weight: 800;
+            font-size: .85rem;
+            background: rgba(255, 255, 255, .75);
+        }
+
+        body.dark .badge {
+            background: rgba(26, 31, 46, .75);
+            border-color: #2a2f42;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
             background: var(--primary);
             color: #fff;
-            padding: 14px 28px;
-            border-radius: 6px;
-            transition: .3s;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-weight: 900;
+            border: none;
             cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-primary:hover {
-            opacity: .85;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            opacity: .95;
         }
 
         .btn-secondary {
+            background: transparent;
             color: var(--primary);
-            padding: 14px 28px;
-            border-radius: 6px;
+            padding: 14px 22px;
+            border-radius: 14px;
+            font-weight: 900;
             border: 1px solid var(--primary);
-            transition: .3s;
             cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .btn-secondary:hover {
-            opacity: .85;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            opacity: .95;
         }
 
-        .hero img {
-            width: 100%;
-            border-radius: 12px;
+        .hero-image {
+            border-radius: 22px;
             border: 1px solid var(--border);
-            transition: .3s;
+            overflow: hidden;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, .10);
+            transition: var(--transition);
         }
 
-        .hero img:hover {
-            transform: translateY(-10px) scale(1.02);
+        .hero-image:hover {
+            transform: translateY(-8px);
         }
 
-        /* SECTIONS */
+        /* ==========================
+           SECTIONS
+        ========================== */
         section {
-            padding: 100px 60px;
+            padding: 85px 0;
         }
 
         .section-title {
-            max-width: 600px;
-            margin-bottom: 60px;
+            text-align: center;
+            max-width: 820px;
+            margin: 0 auto 50px;
         }
 
         .section-title h2 {
-            font-size: 2.2rem;
+            font-size: 2.15rem;
             margin-bottom: 10px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
         }
 
         .section-title p {
-            color: var(--gray);
+            font-weight: 600;
         }
 
-        /* FEATURES */
+        /* ==========================
+           FEATURES
+        ========================== */
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
         }
 
         .feature {
+            background: var(--card);
             border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 12px;
+            border-radius: var(--radius);
+            padding: 26px 20px;
+            transition: var(--transition);
+            min-height: 220px;
             text-align: center;
-            transition: .4s;
         }
 
         .feature:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, .1);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
         }
 
         .feature i {
-            font-size: 2.5rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: rgba(15, 185, 200, 0.12);
             color: var(--primary);
-            margin-bottom: 18px;
+            margin: 0 auto 14px;
+            font-size: 1.2rem;
         }
 
         .feature h3 {
-            margin-bottom: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-weight: 900;
         }
 
-        .feature p {
+        /* ==========================
+           ABOUT
+        ========================== */
+        .about-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 34px;
+            max-width: 1000px;
+            margin: auto;
+            transition: var(--transition);
+        }
+
+        .about-box p {
+            margin-bottom: 14px;
+            line-height: 1.9;
+            font-weight: 600;
             color: var(--gray);
-            font-size: .95rem;
         }
 
-        /* TEAM */
-        .team {
+        body.dark .about-box p {
+            color: #cbd5e1;
+        }
+
+        /* ==========================
+           TEAM
+        ========================== */
+        .team-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+            max-width: 1100px;
+            margin: auto;
         }
 
         .team-card {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
+            background: var(--card);
             border: 1px solid var(--border);
-            transition: .3s;
+            border-radius: 22px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: var(--transition);
         }
 
         .team-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .1);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
         }
 
         .team-card img {
-            width: 120px;
-            height: 120px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            margin-bottom: 15px;
             object-fit: cover;
+            object-position: top center;
+            margin: 0 auto 16px;
+            border: 3px solid rgba(15, 185, 200, .25);
         }
 
-        .team-card h4 {
-            margin-bottom: 5px;
+        .team-card h3 {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            font-weight: 900;
         }
 
-        .team-card p {
+        .team-card span {
+            font-size: .95rem;
+            font-weight: 700;
             color: var(--gray);
         }
 
+        body.dark .team-card span {
+            color: #cbd5e1;
+        }
 
-        #app-versions {
-  padding: 100px 60px;
-}
-
-.team-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 30px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.team-card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 25px;
-  text-align: center;
-  border: 1px solid #e2e8f0;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.team-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
-}
-
-.team-card img {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 15px;
-}
-
-.team-card h3 {
-  margin-bottom: 5px;
-}
-
-.team-card p {
-  color: #64748b;
-  margin-bottom: 12px;
-  font-size: 0.95rem;
-}
-
-.linkedin-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 50%;
-  background: #fff;
-  color: #0a66c2;
-  font-size: 1.1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: transform 0.3s;
-}
-
-.linkedin-icon:hover {
-  transform: scale(1.2);
-}
-
-.versions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 40px;
-  max-width: 1200px;
-  margin: auto;
-}
-
-.version-card {
-  position: relative;
-  background: white;
-  border-radius: 24px;
-  padding: 40px;
-  border: 1px solid var(--border);
-  text-align: center;
-  transition: 0.4s;
-}
-
-.version-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-}
-
-.app-img {
-  width: 100%;
-  border-radius: 16px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border);
-}
-
-.blurred {
-  filter: blur(2px) brightness(0.9);
-}
-
-.version-card h3 {
-  margin-bottom: 10px;
-}
-
-.version-card p {
-  color: var(--gray);
-  margin-bottom: 20px;
-}
-
-.badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 6px 14px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 20px;
-}
-
-.live-badge {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.preview-badge {
-  background: #e0f2fe;
-  color: #075985;
-}
-
-.qr-box {
-  margin: 20px auto;
-  width: fit-content;
-  padding: 16px;
-  border-radius: 16px;
-  border: 2px dashed var(--primary);
-}
-
-.qr-box img {
-  width: 140px;
-  border-radius: 12px;
-}
-
-.app-btn {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 14px 30px;
-  background: var(--primary);
-  color: white;
-  border-radius: 12px;
-  font-weight: 600;
-}
-
-.roadmap {
-  list-style: none;
-  text-align: left;
-  max-width: 260px;
-  margin: auto;
-  color: var(--gray);
-}
-
-.coming-soon {
-  margin-top: 20px;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-/* Dark Mode */
-body.dark .version-card {
-  background: #1a1f2e;
-  border-color: #2a2f42;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  #app-versions {
-    padding: 60px 20px;
-  }
-}
-
-
-        /* CONTACT */
-        .contact-form {
-            max-width: 600px;
+        /* ==========================
+           APP VERSIONS
+        ========================== */
+        .versions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 22px;
+            max-width: 1100px;
             margin: auto;
-            background: white;
-            padding: 40px 30px;
-            border-radius: 24px;
+        }
+
+        .version-card {
+            position: relative;
+            background: var(--card);
             border: 1px solid var(--border);
-            transition: .3s;
-        }
-
-        .contact-form h3 {
+            border-radius: 24px;
+            padding: 32px;
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.6rem;
+            transition: var(--transition);
         }
 
-        .contact-form label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: 500;
+        .version-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
         }
 
-        .contact-form input,
-        .contact-form textarea {
+        .status-badge {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 900;
+        }
+
+        .badge-live {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .badge-next {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        .app-img {
             width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            border: 1px solid #cbd5e1;
-            font-size: 1rem;
-            transition: .3s;
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            margin-bottom: 18px;
         }
 
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 12px rgba(15, 185, 200, .3);
+        .blurred {
+            filter: blur(2px) brightness(.9);
         }
 
-        .contact-form button {
-            background: var(--primary);
-            color: white;
-            padding: 14px 0;
-            width: 100%;
-            border: none;
+        .version-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .roadmap {
+            text-align: left;
+            max-width: 260px;
+            margin: 14px auto 18px;
+            color: var(--gray);
+            font-weight: 700;
+        }
+
+        .roadmap li {
+            margin-bottom: 8px;
+        }
+
+        .app-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 22px;
             border-radius: 14px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            font-weight: 900;
+            border: none;
             cursor: pointer;
-            transition: .3s;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 10px;
         }
 
-        .contact-form button:hover {
-            background: var(--secondary);
+        .app-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
-.team-card {
-  text-align: center; /* يجعل كل المحتوى في المنتصف */
-  padding: 30px;
-  border-radius: 12px;
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  transition: 0.3s;
-}
+        .coming-soon {
+            margin-top: 16px;
+            font-weight: 900;
+            color: var(--primary);
+        }
 
-.linkedin-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 12px; /* مسافة بين النص والأيقونة */
-  padding: 8px;
-  border-radius: 50%;
-  background: #fff;
-  color: #1e2a31;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: transform 0.3s;
-}
+        /* ==========================
+           CONTACT
+        ========================== */
+        .contact-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 22px;
+            max-width: 1100px;
+            margin: auto;
+            align-items: start;
+        }
 
-.linkedin-icon:hover {
-  transform: scale(1.2); /* تكبير عند المرور بالماوس */
-}
+        .contact-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 26px;
+            transition: var(--transition);
+        }
 
+        .contact-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow);
+        }
 
-        /* ============ MODAL ============ */
-.video-modal{
-  position:fixed;
-  inset:0;
-  background:rgba(2,6,23,.85);
-  backdrop-filter:blur(6px);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:1000;
-}
+        .contact-item {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 12px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+        }
 
-.video-modal.active{
-  display:flex;
-}
+        .contact-item i {
+            width: 40px;
+            height: 40px;
+            border-radius: 16px;
+            display: grid;
+            place-items: center;
+            background: rgba(15, 185, 200, 0.12);
+            color: var(--primary);
+            font-size: 1rem;
+        }
 
-.video-box{
-  background:#000;
-  width:90%;
-  max-width:900px;
-  border-radius:20px;
-  padding:20px;
-  position:relative;
-  animation:scaleIn .4s ease;
-}
+        .contact-item h4 {
+            font-size: .95rem;
+            font-weight: 900;
+            margin-bottom: 2px;
+        }
 
-/* Close */
-.close-btn{
-  position:absolute;
-  top:12px;
-  right:16px;
-  font-size:1.4rem;
-  color:#fff;
-  cursor:pointer;
-}
+        .contact-item p {
+            color: var(--gray);
+            font-weight: 700;
+            font-size: .95rem;
+        }
 
-/* Responsive Video */
-.video-wrapper{
-  position:relative;
-  padding-top:56.25%; /* 16:9 */
-  border-radius:16px;
-  overflow:hidden;
-}
+        body.dark .contact-item p {
+            color: #cbd5e1;
+        }
 
-.video-wrapper iframe{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  border:0;
-}
+        .form-control {
+            width: 100%;
+            padding: 14px 14px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+            margin-bottom: 12px;
+            font-family: inherit;
+        }
 
-/* Animation */
-@keyframes scaleIn{
-  from{transform:scale(.9);opacity:0}
-  to{transform:scale(1);opacity:1}
-}
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(15, 185, 200, 0.15);
+        }
 
-/* Mobile tweak */
-@media(max-width:600px){
-  .video-box{
-    padding:12px;
-    border-radius:14px;
-  }
-}
+        .form-status {
+            display: none;
+            margin-top: 12px;
+            padding: 12px 14px;
+            border-radius: 14px;
+            font-weight: 900;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
-.app-btn {
-  display: inline-block;
-  padding: 12px 26px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #0fb9c8, #1e88e5);
-  color: #fff;
-  font-weight: 600;
-  transition: 0.3s ease;
-}
+        .form-status.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
 
-.app-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-}
+        .form-status.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
 
+        /* ==========================
+           WHY SAFEHEART
+        ========================== */
+        #why-safeheart .feature {
+            text-align: center;
+        }
 
+        /* ==========================
+           VIDEO MODAL
+        ========================== */
+        .video-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 6, 23, .85);
+            backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1100;
+        }
 
-        /* FOOTER */
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-box {
+            background: #000;
+            width: 92%;
+            max-width: 900px;
+            border-radius: 20px;
+            padding: 18px;
+            position: relative;
+            animation: scaleIn .35s ease;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-size: 1.4rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-top: 56.25%;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(.92);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        /* ==========================
+           FOOTER
+        ========================== */
         footer {
             border-top: 1px solid var(--border);
-            padding: 30px 60px;
-            font-size: .85rem;
+            padding: 30px 0;
             color: var(--gray);
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            font-weight: 700;
         }
 
-        /* RESPONSIVE */
-        @media(max-width:900px) {
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
 
-            nav,
-            section,
-            .hero {
-                padding: 40px 20px;
-            }
+        /* ==========================
+           WHATSAPP FLOAT
+        ========================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            background: #25d366;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            z-index: 999;
+            transition: transform 0.3s ease;
+        }
 
-            .hero {
-                padding-top: 140px;
-                display: block;
-            }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
 
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-                max-width: 100%;
-            }
-
-            .hero-buttons {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .hero img {
-                margin-top: 20px;
-                width: 100%;
-                height: auto;
-            }
-
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+        @media (max-width: 900px) {
             nav ul {
                 display: none;
             }
 
             .nav-toggle {
-                display: block;
+                display: grid;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.1rem;
+            }
+
+            .contact-layout {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 70px 0;
             }
         }
     </style>
@@ -738,325 +911,510 @@ body.dark .version-card {
 
 <body>
 
-    <nav>
-        <div class="logo">Safe Heart</div>
-        <ul>
-            <li data-target="hero">Home</li>
-            <li> <a href="./Product.html"> Product </a></li>
-            <li data-target="hero">Technology</li>
-            <li data-target="team-section">Team</li>
-            <li data-target="contact">Contact</li>
-        </ul>
-        <div class="nav-toggle" onclick="toggleSidebar()">☰</div>
-        <a class="cta" onclick="toggleDarkMode()">🌙</a>
-    </nav>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
 
+    <!-- SIDEBAR -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="sidebar" id="sidebar">
         <ul>
             <li data-target="hero">Home</li>
-            <li data-target="features-section">Product</li>
-            <li data-target="hero">Technology</li>
-            <li data-target="team-section">Team</li>
+            <li data-target="features">Features</li>
+            <li data-target="why-safeheart">Why SafeHeart?</li>
+            <li data-target="about">About</li>
+            <li data-target="team">Team</li>
+            <li data-target="apps">Applications</li>
             <li data-target="contact">Contact</li>
         </ul>
     </div>
 
+    <!-- NAVBAR -->
+    <nav>
+        <div class="container">
+            <div class="nav-inner">
+                <div class="logo">
+                    <div class="logo-badge">SH</div>
+                    Safe Heart
+                </div>
+
+                <ul>
+                    <li data-target="hero">Home</li>
+                    <li data-target="features">Features</li>
+                    <li data-target="why-safeheart">Why SafeHeart?</li>
+                    <li data-target="about">About</li>
+                    <li data-target="team">Team</li>
+                    <li data-target="apps">Applications</li>
+                    <li data-target="contact">Contact</li>
+                </ul>
+
+                <div class="nav-actions">
+                    <button class="theme-btn" onclick="toggleDarkMode()" title="Dark Mode">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+
+                    <button class="nav-toggle" onclick="toggleSidebar()" title="Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <!-- HERO -->
-    <section class="hero" id="hero">
-        <div class="hero-text">
-            <h1>Remote Patient Monitoring<br>Built for Modern Healthcare</h1>
-            <p>SafeHeart is a connected healthcare platform that enables real-time patient monitoring and seamless
-                doctor communication.</p>
-            <div class="hero-buttons">
-                <a class="btn-primary" href="#contact">Request Demo</a>
-                <a class="btn-secondary" href="./Product.html">View Product</a>
+    <header class="hero" id="hero">
+        <div class="container">
+            <div class="hero-grid">
+
+                <div>
+                    <div class="hero-badges">
+                        <span class="badge"><i class="fa-solid fa-heart-pulse"></i> Real-time Monitoring</span>
+                        <span class="badge"><i class="fa-solid fa-bell"></i> Emergency Alerts</span>
+                        <span class="badge"><i class="fa-solid fa-hospital"></i> Hospital Dashboard</span>
+                    </div>
+
+                    <h1>Smart Heart Monitoring<br>Built for Modern Healthcare</h1>
+                    <p class="muted">
+                        Safe Heart is an integrated healthcare system that combines wearable sensors with a mobile
+                        application
+                        to track, analyze, and alert in real time—helping patients and caregivers act faster and safer.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="btn-primary" href="#contact">
+                            <i class="fa-solid fa-paper-plane"></i> Request Demo
+                        </a>
+                        <a class="btn-secondary" href="#about">
+                            <i class="fa-solid fa-circle-info"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+
+                <div class="hero-image">
+                    <img src="./assets/images/bamd.jpg" alt="Safe Heart Band">
+                </div>
 
             </div>
         </div>
-        <img src="./assets/images/bamd.jpg" alt="Dashboard Mockup">
-    </section>
+    </header>
 
     <!-- FEATURES -->
-    <section id="features-section">
-        <div class="section-title">
-            <h2>One Platform. Complete Care.</h2>
-            <p>Designed for clinical monitoring and academic research.</p>
+    <section id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>One Platform. Complete Care.</h2>
+                <p class="muted">Designed for real-time monitoring, emergency response, and scalable healthcare
+                    solutions.
+                </p>
+            </div>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <h3>Live Monitoring</h3>
+                    <p class="muted">Continuous tracking of heart rate and vital indicators with real-time data
+                        transmission.</p>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>Emergency Alerts</h3>
+                    <p class="muted">Instant alerts when abnormal readings are detected to reduce risk and improve
+                        safety.</p>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    <h3>Medical Dashboard</h3>
+                    <p class="muted">Hospital-ready dashboard to review patient condition and history before clinical
+                        assessment.</p>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>AI Expansion (Future)</h3>
+                    <p class="muted">Scalable architecture with future AI-based insights and risk prediction
+                        capabilities.</p>
+                </div>
+            </div>
         </div>
-        <div class="features">
-            <div class="feature"><i class="fas fa-heartbeat"></i>
-                <h3>Live Monitoring</h3>
-                <p>Track heart rate, SpO₂, ECG, and temperature in real time.</p>
+    </section>
+
+    <!-- WHY SAFEHEART -->
+    <section id="why-safeheart">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why SafeHeart?</h2>
+                <p class="muted">Built for impact, scalability, and real-world healthcare challenges</p>
             </div>
-            <div class="feature"><i class="fas fa-user-md"></i>
-                <h3>Doctor Dashboard</h3>
-                <p>Centralized patient management with chat and video calls.</p>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fa-solid fa-dollar-sign"></i>
+                    <h3>Cost-Effective Solution</h3>
+                    <p class="muted">Affordable alternative to imported medical devices, expanding access to monitoring.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-shield-heart"></i>
+                    <h3>Preventive Care</h3>
+                    <p class="muted">Early warning system reduces emergencies through continuous monitoring and alerts.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-hospital-user"></i>
+                    <h3>Hospital-Ready</h3>
+                    <p class="muted">Hospital dashboard support improves response time and accelerates medical
+                        decisions.
+                    </p>
+                </div>
+
+                <div class="feature">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <h3>Scalable Growth</h3>
+                    <p class="muted">Designed to expand with AI insights, multi-device support, and advanced analytics.
+                    </p>
+                </div>
             </div>
-            <div class="feature"><i class="fas fa-bell"></i>
-                <h3>Emergency Alerts</h3>
-                <p>Instant notifications for abnormal readings.</p>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Safe Heart</h2>
+                <p class="muted">Smart, real-time cardiac monitoring for proactive healthcare</p>
+            </div>
+
+            <div class="about-box">
+                <p>
+                    <strong>Safe Heart</strong> is an integrated smart healthcare system designed for continuous,
+                    real-time heart health monitoring.
+                    The solution combines medical-grade wearable sensors (hardware) with a mobile application (software)
+                    to collect, analyze,
+                    and visualize vital cardiac data in a clear and user-friendly manner.
+                </p>
+
+                <p>
+                    The system continuously measures heart rate and related vital indicators, transmitting data
+                    instantly
+                    to the mobile app,
+                    where readings are analyzed and categorized into three health states:
+                    <strong>Normal, Warning, and Critical</strong>.
+                    In case of abnormal readings, Safe Heart automatically triggers real-time alerts to ensure immediate
+                    attention.
+                </p>
+
+                <p>
+                    During emergency situations, the system can automatically notify caregivers or guardians and
+                    securely
+                    share patient data
+                    with a dedicated hospital web dashboard. This allows medical teams to review the patient’s condition
+                    and medical history
+                    in advance, accelerating clinical decision-making and enabling timely first aid and intervention.
+                </p>
+
+                <p>
+                    Safe Heart targets heart patients, elderly individuals, children, and healthcare providers.
+                    The system is designed to be affordable, easy to use, and requires minimal user
+                    interaction—especially
+                    important
+                    for vulnerable groups such as seniors and children.
+                </p>
+
+                <p>
+                    Built with scalability in mind, Safe Heart can be expanded in the future by integrating artificial
+                    intelligence technologies
+                    to analyze health patterns and predict potential risks before they occur.
+                    This contributes to improved healthcare quality, reduced sudden emergencies, and supports the
+                    digital
+                    transformation of the medical sector.
+                </p>
             </div>
         </div>
     </section>
 
     <!-- TEAM -->
-    <section id="team-section">
-        <div class="section-title">
-            <h2>Our Team</h2>
-            <p>Project ownership and technical direction</p>
-        </div>
-    
-        <div class="team-cards">
-            <!-- Team Member 1 -->
-            <div class="team-card">
-                <img src="./assets/images/Mohamed-Fawzy-edited.jpg" alt="Mohamed Fawzy Elsawy">
-                <h3>Mohamed Fawzy Elsawy</h3>
-                <p>Hardware & Firmware Lead</p>
-                <!-- <a href="https://www.linkedin.com/in/minamaged/" target="_blank" class="linkedin-icon">
-                    <i class="fab fa-linkedin"></i>
-                </a> -->
+    <section id="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Team</h2>
+                <p class="muted">Project ownership and technical direction</p>
             </div>
-    
-            <!-- Team Member 2 -->
-            <div class="team-card">
-                <img src="./assets/images/Omnia Salah Rateb.jpeg" alt="Omnia Salah Rateb">
-                <h3>Omnia Salah Rateb</h3>
-                <p>UI/UX & Frontend Developer</p>
-                <!-- <a href="#" target="_blank" class="linkedin-icon">
-                    <i class="fab fa-linkedin"></i>
-                </a> -->
-            </div>
-    
-            <!-- Team Member 3 -->
-            <div class="team-card">
-                <img src="./assets/images/Mohamed Ahmed Abdo.jpeg" alt="Mohamed Ahmed Abdo">
-                <h3>Mohamed Ahmed Abdo</h3>
-                <p>Mobile App Developer</p>
-                <!-- <a href="#" target="_blank" class="linkedin-icon">
-                    <i class="fab fa-linkedin"></i>
-                </a> -->
-            </div>
-    
-            <!-- Team Member 4 -->
-            <div class="team-card">
-                <img src="https://via.placeholder.com/300x300" alt="Basel Ashraf Mohamed">
-                <h3>Basel Ashraf Mohamed</h3>
-                <p>Mobile App Developer</p>
-                <!-- <a href="#" target="_blank" class="linkedin-icon">
-                    <i class="fab fa-linkedin"></i>
-                </a> -->
-            </div>
-        </div>
-    </section>
 
-    <section id="app-versions">
-        <div class="section-title center">
-            <h2>SafeHeart Applications</h2>
-            <p>Live demo and future roadmap preview</p>
-        </div>
-    
-        <div class="versions-grid">
-    
-            <!-- VERSION 1 - LIVE -->
-            <div class="version-card live">
-                <span class="badge live-badge">LIVE DEMO</span>
-    
-                <img src="./assets/images/web_app_v1.png" class="app-img">
-    
-                <h3>SafeHeart App – Version 1</h3>
-                <p>
-                    Fully functional remote patient monitoring application.
-                    Demonstrated live at the exhibition.
-                </p>
-    
-                <!-- <div class="qr-box">
-                    <img src="./assets/images/data_drive.png">
-                    <span>Scan to open live demo</span>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="./assets/images/Mohamed-Fawzy-edited.jpg" alt="Mohamed Fawzy Elsawy">
+                    <h3>Mohamed Fawzy Elsawy</h3>
+                    <span>Hardware & Firmware Lead</span>
                 </div>
-     -->
-                <a href="https://mohamedel-sawy.github.io/SafeHeart1/" class="app-btn" target="_blank" rel="noopener noreferrer">
-                    Open Live Demo
-                </a>
 
-            </div>
-    
-            <!-- VERSION 2 - PREVIEW -->
-            <div class="version-card preview">
-                <span class="badge preview-badge">NEXT VERSION</span>
-    
-                <img src="./assets/images/app_v2.png" class="app-img blurred">
-    
-                <h3>SafeHeart App – Version 2</h3>
-                <p>
-                    Advanced analytics, AI-based alerts and enhanced doctor dashboard.
-                    Currently under development.
-                </p>
-    
-                <ul class="roadmap">
-                    <li>• AI Health Insights</li>
-                    <li>• Video Consultations</li>
-                    <li>• Multi-device Support</li>
-                </ul>
-                <button class="app-btn ghost" onclick="openModal()">
-                    Watch App Preview
-                </button>
+                <div class="team-card">
+                    <img src="./assets/images/Omnia Salah Rateb.jpeg" alt="Omnia Salah Rateb">
+                    <h3>Omnia Salah Rateb</h3>
+                    <span>UI/UX & Frontend Developer</span>
+                </div>
 
-                <div class="coming-soon">Coming Soon</div>
+                <div class="team-card">
+                    <img src="./assets/images/Mohamed Ahmed Abdo.jpeg" alt="Mohamed Ahmed Abdo">
+                    <h3>Mohamed Ahmed Abdo</h3>
+                    <span>Mobile App Developer</span>
+                </div>
+
+                <div class="team-card">
+                    <img src="./assets/images/Basel.jpeg" alt="Basel Ashraf Mohamed">
+                    <h3>Basel Ashraf Mohamed</h3>
+                    <span>Mobile App Developer</span>
+                </div>
             </div>
-    
         </div>
     </section>
 
+    <!-- APPS -->
+    <section id="apps">
+        <div class="container">
+            <div class="section-title">
+                <h2>Safe Heart Applications</h2>
+                <p class="muted">Live demo and future roadmap preview</p>
+            </div>
 
+            <div class="versions-grid">
+                <!-- V1 -->
+                <div class="version-card">
+                    <span class="status-badge badge-live">LIVE DEMO</span>
+
+                    <img src="./assets/images/web_app_v1.png" class="app-img" alt="SafeHeart App v1">
+
+                    <h3>Safe Heart App – Version 1</h3>
+                    <p class="muted">
+                        Fully functional remote patient monitoring application.
+                        Demonstrated live at the exhibition.
+                    </p>
+
+                    <a href="https://mohamedel-sawy.github.io/SafeHeart1/" target="_blank" class="app-btn">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Live Demo
+                    </a>
+                </div>
+
+                <!-- V2 -->
+                <div class="version-card">
+                    <span class="status-badge badge-next">NEXT VERSION</span>
+
+                    <img src="./assets/images/app_v2.png" class="app-img blurred" alt="SafeHeart App v2">
+
+                    <h3>Safe Heart App – Version 2</h3>
+                    <p class="muted">
+                        Advanced analytics, AI-based alerts and enhanced doctor dashboard.
+                        Currently under development.
+                    </p>
+
+                    <ul class="roadmap">
+                        <li>• AI Health Insights</li>
+                        <li>• Video Consultations</li>
+                        <li>• Multi-device Support</li>
+                    </ul>
+
+                    <button class="app-btn" onclick="openModal()">
+                        <i class="fa-solid fa-play"></i> Watch App Preview
+                    </button>
+
+                    <div class="coming-soon">Coming Soon</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIDEO MODAL -->
     <div class="video-modal" id="videoModal">
         <div class="video-box">
             <span class="close-btn" onclick="closeModal()">✕</span>
-    
+
             <div class="video-wrapper">
-                <iframe src="https://drive.google.com/file/d/1x2KMj2xh2LQXVfpFFqyxlHFnQ5arEzxk/view?usp=drive_link" allow="autoplay" allowfullscreen>
-                </iframe>
+                <iframe id="previewVideo"
+                    src="https://drive.google.com/file/d/1x2KMj2xh2LQXVfpFFqyxlHFnQ5arEzxk/preview" allow="autoplay"
+                    allowfullscreen></iframe>
             </div>
-    
         </div>
     </div>
 
-
-
-
     <!-- CONTACT -->
     <section id="contact">
-        <div class="contact-form">
-            <h3>Contact / Proposals / Partnerships</h3>
-            <form>
-                <label for="name">Name</label><input type="text" id="name" placeholder="Your Name" required>
-                <label for="email">Email</label><input type="email" id="email" placeholder="Your Email" required>
-                <label for="message">Message</label><textarea id="message" rows="5" placeholder="Type your message..."
-                    required></textarea>
-                <button type="submit">Send Message</button>
-            </form>
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p class="muted">Let’s talk demos, partnerships, and opportunities</p>
+            </div>
+
+            <div class="contact-layout">
+
+                <!-- INFO -->
+                <div class="contact-card">
+                    <div class="contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>0mohamedelsawy@example.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+20 1008611382</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Egypt</p>
+                        </div>
+                    </div>
+
+                    <p class="muted" style="margin-top:14px;">
+                        We respond as soon as possible. Leave your message and our team will contact you.
+                    </p>
+                </div>
+
+                <!-- FORM -->
+                <div class="contact-card">
+                    <form id="contactForm">
+                        <input class="form-control" type="text" id="name" placeholder="Your Name" required />
+                        <input class="form-control" type="email" id="email" placeholder="Your Email" required />
+                        <textarea class="form-control" id="message" rows="5" placeholder="Type your message..."
+                            required></textarea>
+
+                        <button class="btn-primary" type="submit" id="sendBtn"
+                            style="width:100%; justify-content:center;">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <span id="btnText">Send Message</span>
+                        </button>
+
+                        <div id="formStatus" class="form-status"></div>
+                    </form>
+                </div>
+
+            </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer>
-        <span>© 2025 SafeHeart – Startup Demo</span>
-        <span>Privacy • Terms</span>
+        <div class="container">
+            <div class="footer-inner">
+                <span>© 2025 Safe Heart – Smart Heart Monitoring</span>
+                <span>Privacy • Terms</span>
+            </div>
+        </div>
     </footer>
 
+    <!-- WHATSAPP FLOAT -->
+    <a href="https://wa.me/201008611382" target="_blank" class="whatsapp-float" title="WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- SCRIPTS -->
     <script>
-        function toggleDarkMode() { document.body.classList.toggle('dark'); }
-
-        const sidebar = document.getElementById('sidebar');
-        const navToggle = document.querySelector('.nav-toggle');
-
-        function toggleSidebar() { sidebar.classList.toggle('show'); }
-
-        document.addEventListener('click', (e) => {
-            if (!sidebar.contains(e.target) && !navToggle.contains(e.target)) {
-                sidebar.classList.remove('show');
-            }
+        // Preloader
+        window.addEventListener("load", () => {
+            const preloader = document.getElementById("preloader");
+            preloader.style.opacity = "0";
+            setTimeout(() => preloader.remove(), 400);
         });
 
-        /* Sidebar & Navbar links scrolling */
+        // Dark Mode
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark");
+        }
+
+        // Sidebar
+        const sidebar = document.getElementById("sidebar");
+        const overlay = document.getElementById("sidebarOverlay");
+
+        function toggleSidebar() {
+            sidebar.classList.toggle("show");
+            overlay.classList.toggle("active");
+        }
+
+        overlay.addEventListener("click", () => {
+            sidebar.classList.remove("show");
+            overlay.classList.remove("active");
+        });
+
+        // Smooth scroll links
         document.querySelectorAll('nav ul li, .sidebar ul li').forEach(link => {
             link.addEventListener('click', () => {
-                const targetId = link.getAttribute('data-target');
+                const targetId = link.getAttribute("data-target");
                 const targetEl = document.getElementById(targetId);
                 if (targetEl) {
-                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                    targetEl.scrollIntoView({ behavior: "smooth" });
                 }
-                sidebar.classList.remove('show');
+                sidebar.classList.remove("show");
+                overlay.classList.remove("active");
             });
         });
 
-        /* View Product */
-        function viewProduct() {
-            window.location.href = "https://yourcompany.com/product"; // حط الرابط الصحيح هنا
+        // Video Modal
+        const videoModal = document.getElementById("videoModal");
+        const previewVideo = document.getElementById("previewVideo");
+
+        function openModal() {
+            videoModal.classList.add("active");
+            document.body.style.overflow = "hidden";
         }
+
+        function closeModal() {
+            videoModal.classList.remove("active");
+            document.body.style.overflow = "";
+            previewVideo.src = previewVideo.src;
+        }
+
+        videoModal.addEventListener("click", (e) => {
+            if (e.target.id === "videoModal") closeModal();
+        });
+
+        // Contact Form Demo (Success Message)
+        const contactForm = document.getElementById("contactForm");
+        const formStatus = document.getElementById("formStatus");
+        const sendBtn = document.getElementById("sendBtn");
+        const btnText = document.getElementById("btnText");
+
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const message = document.getElementById("message").value.trim();
+
+            if (!name || !email || !message) {
+                formStatus.className = "form-status error";
+                formStatus.style.display = "flex";
+                formStatus.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> Please fill all fields.`;
+                return;
+            }
+
+            sendBtn.disabled = true;
+            btnText.textContent = "Sending...";
+
+            setTimeout(() => {
+                formStatus.className = "form-status success";
+                formStatus.style.display = "flex";
+                formStatus.innerHTML = `<i class="fa-solid fa-circle-check"></i> Message sent successfully ✔`;
+
+                // ✅ لو مش عايز الفورم تتمسح سيب السطر ده مقفول
+                // contactForm.reset();
+
+                sendBtn.disabled = false;
+                btnText.textContent = "Send Message";
+            }, 1000);
+        });
     </script>
-
-
-<script>
-    function openModal() {
-        document.getElementById("videoModal").classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeModal() {
-        const modal = document.getElementById("videoModal");
-        modal.classList.remove("active");
-
-        // Stop video
-        modal.querySelector("iframe").src =
-            modal.querySelector("iframe").src;
-
-        document.body.style.overflow = "";
-    }
-
-    document.getElementById("videoModal")
-            .addEventListener("click", e => {
-                if (e.target.id === "videoModal") closeModal();
-            });
-
-</script>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCA-QB0_T3Ano-0iIy7XME-opFc6MZXzRg",
-        authDomain: "safeheart-2d878.safeheart-2d878.firebaseapp.com.com",
-        databaseURL: "https://safeheart-2d878-default-rtdb.firebaseio.com",
-        projectId: "safeheart-2d878",
-        storageBucket: "safeheart-2d878.appspot.com",
-        messagingSenderId: "968110391488",
-        appId: "1:968110391488:web:235a04d5b59205b1076d25"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    const form = document.querySelector(".contact-form form");
-
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById("name").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const message = document.getElementById("message").value.trim();
-
-        if (!name || !email || !message) {
-            alert("Please fill all fields");
-            return;
-        }
-
-        const contactRef = ref(db, "contact_requests");
-        const newRequest = push(contactRef);
-
-        set(newRequest, {
-            name,
-            email,
-            message,
-            type: "Website Contact",
-            source: "Pitch Page",
-            status: "new",
-            createdAt: new Date().toISOString()
-        })
-            .then(() => {
-                sendEmailNotification(name, email, message);
-                form.reset();
-                alert("Message sent successfully ✔");
-            })
-            .catch((error) => {
-                console.error(error);
-                // alert("Error sending message ❌");
-            });
-    });
-</script>
-
-
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
-
 
 </body>
 
